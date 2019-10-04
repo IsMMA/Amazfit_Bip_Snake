@@ -7,7 +7,6 @@ Discarded input sections
  .text          0x00000000        0x0 Snake.o
  .data          0x00000000        0x0 Snake.o
  .bss           0x00000000        0x0 Snake.o
- .bss.puntos    0x00000000        0x4 Snake.o
  .data.posicionXCabeza
                 0x00000000        0x4 Snake.o
  .data.posicionYCabeza
@@ -23,7 +22,7 @@ Discarded input sections
                 0x00000000        0xc ..\libbip\libbip.a(import.o)
  .text.text_out_set_font
                 0x00000000        0xc ..\libbip\libbip.a(import.o)
- .text.draw_rect
+ .text.draw_horizontal_line
                 0x00000000        0xc ..\libbip\libbip.a(import.o)
  .text.draw_vertical_line
                 0x00000000        0xc ..\libbip\libbip.a(import.o)
@@ -299,34 +298,34 @@ LOAD ..\libbip\libbip.a
 .rela.dtors
  *(.rela.dtors)
 
-.rel.got        0x00008088       0x60
+.rel.got        0x00008088       0x68
  *(.rel.got)
- .rel.got       0x00008088       0x60 Snake.o
+ .rel.got       0x00008088       0x68 Snake.o
 
 .rela.got
  *(.rela.got)
 
-.rel.bss        0x000080e8        0x0
+.rel.bss        0x000080f0        0x0
  *(.rel.bss .rel.bss.* .rel.gnu.linkonce.b.*)
- .rel.bss       0x000080e8        0x0 Snake.o
+ .rel.bss       0x000080f0        0x0 Snake.o
 
 .rela.bss
  *(.rela.bss .rela.bss.* .rela.gnu.linkonce.b.*)
 
-.rel.iplt       0x000080e8        0x0
+.rel.iplt       0x000080f0        0x0
                 [!provide]                PROVIDE (__rel_iplt_start = .)
  *(.rel.iplt)
- .rel.iplt      0x000080e8        0x0 Snake.o
+ .rel.iplt      0x000080f0        0x0 Snake.o
                 [!provide]                PROVIDE (__rel_iplt_end = .)
 
-.rela.iplt      0x000080e8        0x0
+.rela.iplt      0x000080f0        0x0
                 [!provide]                PROVIDE (__rela_iplt_start = .)
  *(.rela.iplt)
                 [!provide]                PROVIDE (__rela_iplt_end = .)
 
-.rel.plt        0x000080e8        0x0
+.rel.plt        0x000080f0        0x0
  *(.rel.plt)
- .rel.plt       0x000080e8        0x0 Snake.o
+ .rel.plt       0x000080f0        0x0 Snake.o
 
 .rela.plt
  *(.rela.plt)
@@ -334,111 +333,120 @@ LOAD ..\libbip\libbip.a
 .init
  *(SORT_NONE(.init))
 
-.plt            0x000080e8        0x0
+.plt            0x000080f0        0x0
  *(.plt)
- .plt           0x000080e8        0x0 Snake.o
+ .plt           0x000080f0        0x0 Snake.o
 
-.iplt           0x000080e8        0x0
+.iplt           0x000080f0        0x0
  *(.iplt)
- .iplt          0x000080e8        0x0 Snake.o
+ .iplt          0x000080f0        0x0 Snake.o
 
-.text           0x000080e8      0x41c
+.text           0x000080f0      0x59c
  *(.text.unlikely .text.*_unlikely .text.unlikely.*)
  *(.text.exit .text.exit.*)
  *(.text.startup .text.startup.*)
  .text.startup.main
-                0x000080e8        0xa Snake.o
-                0x000080e8                main
+                0x000080f0        0xa Snake.o
+                0x000080f0                main
  *(.text.hot .text.hot.*)
  *(.text .stub .text.* .gnu.linkonce.t.*)
- *fill*         0x000080f2        0x2 
+ *fill*         0x000080fa        0x2 
  .text.key_press_screen
-                0x000080f4       0x2c Snake.o
-                0x000080f4                key_press_screen
+                0x000080fc       0x2c Snake.o
+                0x000080fc                key_press_screen
  .text.dispatch_screen
-                0x00008120       0xb4 Snake.o
-                0x00008120                dispatch_screen
+                0x00008128       0xf8 Snake.o
+                0x00008128                dispatch_screen
  .text.pintarCruceta
-                0x000081d4       0x48 Snake.o
-                0x000081d4                pintarCruceta
+                0x00008220       0x48 Snake.o
+                0x00008220                pintarCruceta
+ .text.crearFruta
+                0x00008268       0x24 Snake.o
+                0x00008268                crearFruta
+ .text.crearCoordenadasFruta
+                0x0000828c       0x3c Snake.o
+                0x0000828c                crearCoordenadasFruta
+ .text.detectarColision
+                0x000082c8      0x12c Snake.o
+                0x000082c8                detectarColision
  .text.refrescar_juego
-                0x0000821c      0x100 Snake.o
-                0x0000821c                refrescar_juego
+                0x000083f4       0xe8 Snake.o
+                0x000083f4                refrescar_juego
  .text.screen_job
-                0x0000831c       0x28 Snake.o
-                0x0000831c                screen_job
+                0x000084dc       0x28 Snake.o
+                0x000084dc                screen_job
  .text.inicializar
-                0x00008344       0x50 Snake.o
-                0x00008344                inicializar
+                0x00008504       0x18 Snake.o
+                0x00008504                inicializar
  .text.show_screen
-                0x00008394       0x80 Snake.o
-                0x00008394                show_screen
- .text          0x00008414        0xc ..\libbip\libbip.a(import.o)
-                0x00008414                _start
+                0x0000851c       0x80 Snake.o
+                0x0000851c                show_screen
+ .text          0x0000859c        0xc ..\libbip\libbip.a(import.o)
+                0x0000859c                _start
  .text.text_out_center
-                0x00008420        0xc ..\libbip\libbip.a(import.o)
-                0x00008420                text_out_center
+                0x000085a8        0xc ..\libbip\libbip.a(import.o)
+                0x000085a8                text_out_center
  .text.set_bg_color
-                0x0000842c        0xc ..\libbip\libbip.a(import.o)
-                0x0000842c                set_bg_color
+                0x000085b4        0xc ..\libbip\libbip.a(import.o)
+                0x000085b4                set_bg_color
  .text.set_fg_color
-                0x00008438        0xc ..\libbip\libbip.a(import.o)
-                0x00008438                set_fg_color
- .text.draw_horizontal_line
-                0x00008444        0xc ..\libbip\libbip.a(import.o)
-                0x00008444                draw_horizontal_line
+                0x000085c0        0xc ..\libbip\libbip.a(import.o)
+                0x000085c0                set_fg_color
+ .text.draw_rect
+                0x000085cc        0xc ..\libbip\libbip.a(import.o)
+                0x000085cc                draw_rect
  .text.fill_screen_bg
-                0x00008450        0xc ..\libbip\libbip.a(import.o)
-                0x00008450                fill_screen_bg
+                0x000085d8        0xc ..\libbip\libbip.a(import.o)
+                0x000085d8                fill_screen_bg
  .text.set_graph_callback_to_ram_1
-                0x0000845c        0xc ..\libbip\libbip.a(import.o)
-                0x0000845c                set_graph_callback_to_ram_1
+                0x000085e4        0xc ..\libbip\libbip.a(import.o)
+                0x000085e4                set_graph_callback_to_ram_1
  .text.repaint_screen_lines
-                0x00008468        0xc ..\libbip\libbip.a(import.o)
-                0x00008468                repaint_screen_lines
+                0x000085f0        0xc ..\libbip\libbip.a(import.o)
+                0x000085f0                repaint_screen_lines
  .text.reg_menu
-                0x00008474        0xc ..\libbip\libbip.a(import.o)
-                0x00008474                reg_menu
+                0x000085fc        0xc ..\libbip\libbip.a(import.o)
+                0x000085fc                reg_menu
  .text.show_menu_animate
-                0x00008480        0xc ..\libbip\libbip.a(import.o)
-                0x00008480                show_menu_animate
+                0x00008608        0xc ..\libbip\libbip.a(import.o)
+                0x00008608                show_menu_animate
  .text.load_font
-                0x0000848c        0xc ..\libbip\libbip.a(import.o)
-                0x0000848c                load_font
+                0x00008614        0xc ..\libbip\libbip.a(import.o)
+                0x00008614                load_font
  .text._sprintf
-                0x00008498        0xc ..\libbip\libbip.a(import.o)
-                0x00008498                _sprintf
- .text._memclr  0x000084a4        0xc ..\libbip\libbip.a(import.o)
-                0x000084a4                _memclr
+                0x00008620        0xc ..\libbip\libbip.a(import.o)
+                0x00008620                _sprintf
+ .text._memclr  0x0000862c        0xc ..\libbip\libbip.a(import.o)
+                0x0000862c                _memclr
  .text.get_tick_count
-                0x000084b0        0xc ..\libbip\libbip.a(import.o)
-                0x000084b0                get_tick_count
+                0x00008638        0xc ..\libbip\libbip.a(import.o)
+                0x00008638                get_tick_count
  .text.set_update_period
-                0x000084bc        0xc ..\libbip\libbip.a(import.o)
-                0x000084bc                set_update_period
- .text.vibrate  0x000084c8        0xc ..\libbip\libbip.a(import.o)
-                0x000084c8                vibrate
+                0x00008644        0xc ..\libbip\libbip.a(import.o)
+                0x00008644                set_update_period
+ .text.vibrate  0x00008650        0xc ..\libbip\libbip.a(import.o)
+                0x00008650                vibrate
  .text.pvPortMalloc
-                0x000084d4        0xc ..\libbip\libbip.a(import.o)
-                0x000084d4                pvPortMalloc
+                0x0000865c        0xc ..\libbip\libbip.a(import.o)
+                0x0000865c                pvPortMalloc
  .text.show_watchface
-                0x000084e0        0xc ..\libbip\libbip.a(import.o)
-                0x000084e0                show_watchface
+                0x00008668        0xc ..\libbip\libbip.a(import.o)
+                0x00008668                show_watchface
  .text.get_var_menu_overlay
-                0x000084ec        0xc ..\libbip\libbip.a(import.o)
-                0x000084ec                get_var_menu_overlay
+                0x00008674        0xc ..\libbip\libbip.a(import.o)
+                0x00008674                get_var_menu_overlay
  .text.get_ptr_temp_buf_2
-                0x000084f8        0xc ..\libbip\libbip.a(import.o)
-                0x000084f8                get_ptr_temp_buf_2
+                0x00008680        0xc ..\libbip\libbip.a(import.o)
+                0x00008680                get_ptr_temp_buf_2
  *(.gnu.warning)
  *(.glue_7t)
- .glue_7t       0x00008504        0x0 linker stubs
+ .glue_7t       0x0000868c        0x0 linker stubs
  *(.glue_7)
- .glue_7        0x00008504        0x0 linker stubs
+ .glue_7        0x0000868c        0x0 linker stubs
  *(.vfp11_veneer)
- .vfp11_veneer  0x00008504        0x0 linker stubs
+ .vfp11_veneer  0x0000868c        0x0 linker stubs
  *(.v4_bx)
- .v4_bx         0x00008504        0x0 linker stubs
+ .v4_bx         0x0000868c        0x0 linker stubs
 
 .fini
  *(SORT_NONE(.fini))
@@ -446,12 +454,12 @@ LOAD ..\libbip\libbip.a
                 [!provide]                PROVIDE (_etext = .)
                 [!provide]                PROVIDE (etext = .)
 
-.rodata         0x00008504       0x12
+.rodata         0x0000868c       0x12
  *(.rodata .rodata.* .gnu.linkonce.r.*)
  .rodata.pintarCruceta.str1.1
-                0x00008504        0x8 Snake.o
+                0x0000868c        0x8 Snake.o
  .rodata.refrescar_juego.str1.1
-                0x0000850c        0xa Snake.o
+                0x00008694        0xa Snake.o
 
 .rodata1
  *(.rodata1)
@@ -480,7 +488,7 @@ LOAD ..\libbip\libbip.a
 
 .exception_ranges
  *(.exception_ranges*)
-                0x00008516                . = .
+                0x0000869e                . = .
 
 .eh_frame
  *(.eh_frame)
@@ -495,7 +503,7 @@ LOAD ..\libbip\libbip.a
 .exception_ranges
  *(.exception_ranges*)
 
-.tdata          0x00008516        0x0
+.tdata          0x0000869e        0x0
                 [!provide]                PROVIDE (__tdata_start = .)
  *(.tdata .tdata.* .gnu.linkonce.td.*)
 
@@ -503,18 +511,18 @@ LOAD ..\libbip\libbip.a
  *(.tbss .tbss.* .gnu.linkonce.tb.*)
  *(.tcommon)
 
-.preinit_array  0x00008516        0x0
+.preinit_array  0x0000869e        0x0
                 [!provide]                PROVIDE (__preinit_array_start = .)
  *(.preinit_array)
                 [!provide]                PROVIDE (__preinit_array_end = .)
 
-.init_array     0x00008516        0x0
+.init_array     0x0000869e        0x0
                 [!provide]                PROVIDE (__init_array_start = .)
  *(SORT_BY_INIT_PRIORITY(.init_array.*) SORT_BY_INIT_PRIORITY(.ctors.*))
  *(.init_array EXCLUDE_FILE(*crtend?.o *crtend.o *crtbegin?.o *crtbegin.o) .ctors)
                 [!provide]                PROVIDE (__init_array_end = .)
 
-.fini_array     0x00008516        0x0
+.fini_array     0x0000869e        0x0
                 [!provide]                PROVIDE (__fini_array_start = .)
  *(SORT_BY_INIT_PRIORITY(.fini_array.*) SORT_BY_INIT_PRIORITY(.dtors.*))
  *(.fini_array EXCLUDE_FILE(*crtend?.o *crtend.o *crtbegin?.o *crtbegin.o) .dtors)
@@ -537,80 +545,82 @@ LOAD ..\libbip\libbip.a
 .jcr
  *(.jcr)
 
-.data.rel.ro    0x00008516        0x0
+.data.rel.ro    0x0000869e        0x0
  *(.data.rel.ro.local* .gnu.linkonce.d.rel.ro.local.*)
  *(.data.rel.ro .data.rel.ro.* .gnu.linkonce.d.rel.ro.*)
- .data.rel.ro   0x00008516        0x0 Snake.o
+ .data.rel.ro   0x0000869e        0x0 Snake.o
 
-.dynamic        0x00008518       0x80
+.dynamic        0x000086a0       0x80
  *(.dynamic)
- .dynamic       0x00008518       0x80 Snake.o
-                0x00008518                _DYNAMIC
+ .dynamic       0x000086a0       0x80 Snake.o
+                0x000086a0                _DYNAMIC
 
-.got            0x00008598       0x3c
+.got            0x00008720       0x40
  *(.got.plt)
- .got.plt       0x00008598        0xc Snake.o
-                0x00008598                _GLOBAL_OFFSET_TABLE_
+ .got.plt       0x00008720        0xc Snake.o
+                0x00008720                _GLOBAL_OFFSET_TABLE_
  *(.igot.plt)
- .igot.plt      0x000085a4        0x0 Snake.o
+ .igot.plt      0x0000872c        0x0 Snake.o
  *(.got)
- .got           0x000085a4       0x30 Snake.o
+ .got           0x0000872c       0x34 Snake.o
  *(.igot)
 
-.data           0x000085d4      0x358
-                0x000085d4                __data_start = .
+.data           0x00008760      0x350
+                0x00008760                __data_start = .
  *(.data .data.* .gnu.linkonce.d.*)
  .data.orientacion
-                0x000085d4        0x4 Snake.o
-                0x000085d4                orientacion
+                0x00008760        0x4 Snake.o
+                0x00008760                orientacion
  .data.orientacionAnterior
-                0x000085d8        0x4 Snake.o
-                0x000085d8                orientacionAnterior
- .data.posicionXComida
-                0x000085dc        0x4 Snake.o
-                0x000085dc                posicionXComida
- .data.posicionYComida
-                0x000085e0        0x4 Snake.o
-                0x000085e0                posicionYComida
+                0x00008764        0x4 Snake.o
+                0x00008764                orientacionAnterior
  .data.rel.screen_data
-                0x000085e4       0x20 Snake.o
-                0x000085e4                screen_data
+                0x00008768       0x20 Snake.o
+                0x00008768                screen_data
  .data.serpienteX
-                0x00008604      0x190 Snake.o
-                0x00008604                serpienteX
+                0x00008788      0x190 Snake.o
+                0x00008788                serpienteX
  .data.serpienteY
-                0x00008794      0x190 Snake.o
-                0x00008794                serpienteY
+                0x00008918      0x190 Snake.o
+                0x00008918                serpienteY
  .data.tamSerpiente
-                0x00008924        0x4 Snake.o
-                0x00008924                tamSerpiente
+                0x00008aa8        0x4 Snake.o
+                0x00008aa8                tamSerpiente
  .data.velocidad
-                0x00008928        0x4 Snake.o
-                0x00008928                velocidad
+                0x00008aac        0x4 Snake.o
+                0x00008aac                velocidad
 
 .data1
  *(.data1)
-                0x0000892c                _edata = .
+                0x00008ab0                _edata = .
                 [!provide]                PROVIDE (edata = .)
-                0x0000892c                . = .
-                0x0000892c                __bss_start = .
-                0x0000892c                __bss_start__ = .
+                0x00008ab0                . = .
+                0x00008ab0                __bss_start = .
+                0x00008ab0                __bss_start__ = .
 
-.bss            0x0000892c        0x4
+.bss            0x00008ab0       0x10
  *(.dynbss)
- .dynbss        0x0000892c        0x0 Snake.o
+ .dynbss        0x00008ab0        0x0 Snake.o
  *(.bss .bss.* .gnu.linkonce.b.*)
- .bss.gira      0x0000892c        0x4 Snake.o
-                0x0000892c                gira
+ .bss.gira      0x00008ab0        0x4 Snake.o
+                0x00008ab0                gira
+ .bss.posicionXComida
+                0x00008ab4        0x4 Snake.o
+                0x00008ab4                posicionXComida
+ .bss.posicionYComida
+                0x00008ab8        0x4 Snake.o
+                0x00008ab8                posicionYComida
+ .bss.puntos    0x00008abc        0x4 Snake.o
+                0x00008abc                puntos
  *(COMMON)
-                0x00008930                . = ALIGN ((. != 0x0)?0x4:0x1)
-                0x00008930                _bss_end__ = .
-                0x00008930                __bss_end__ = .
-                0x00008930                . = ALIGN (0x4)
-                0x00008930                . = SEGMENT_START ("ldata-segment", .)
-                0x00008930                . = ALIGN (0x4)
-                0x00008930                __end__ = .
-                0x00008930                _end = .
+                0x00008ac0                . = ALIGN ((. != 0x0)?0x4:0x1)
+                0x00008ac0                _bss_end__ = .
+                0x00008ac0                __bss_end__ = .
+                0x00008ac0                . = ALIGN (0x4)
+                0x00008ac0                . = SEGMENT_START ("ldata-segment", .)
+                0x00008ac0                . = ALIGN (0x4)
+                0x00008ac0                __end__ = .
+                0x00008ac0                _end = .
                 [!provide]                PROVIDE (end = .)
 
 .stack          0x00080000        0x0
@@ -744,6 +754,9 @@ _strncmp                                          ..\libbip\libbip.a(import.o)
 _strncpy                                          ..\libbip\libbip.a(import.o)
 add_menu_item                                     ..\libbip\libbip.a(import.o)
 clear_menu                                        ..\libbip\libbip.a(import.o)
+crearCoordenadasFruta                             Snake.o
+crearFruta                                        Snake.o
+detectarColision                                  Snake.o
 dispatch_alarm_set                                ..\libbip\libbip.a(import.o)
 dispatch_left_side_menu                           ..\libbip\libbip.a(import.o)
 dispatch_menu                                     ..\libbip\libbip.a(import.o)
@@ -751,10 +764,10 @@ dispatch_screen                                   Snake.o
 draw_filled_rect                                  ..\libbip\libbip.a(import.o)
 draw_filled_rect_bg                               ..\libbip\libbip.a(import.o)
 draw_horizontal_line                              ..\libbip\libbip.a(import.o)
-                                                  Snake.o
 draw_menu                                         ..\libbip\libbip.a(import.o)
 draw_progressbar                                  ..\libbip\libbip.a(import.o)
 draw_rect                                         ..\libbip\libbip.a(import.o)
+                                                  Snake.o
 draw_rect_or_line                                 ..\libbip\libbip.a(import.o)
 draw_vertical_line                                ..\libbip\libbip.a(import.o)
 dump_mem                                          ..\libbip\libbip.a(import.o)

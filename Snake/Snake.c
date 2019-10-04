@@ -11,24 +11,21 @@
 #include "Snake.h"
 
 //Velocidad actual del juego
-int velocidad = 100;
+int velocidad = 150;
 //Puntos obtenidos
 int puntos = 0;
 //Posiciones de la serpiente
-int serpienteX[100] = {88,87,86,85,84,83,82,81};
-int serpienteY[100] = {60,60,60,60,60,60,60,60};
+int serpienteX[100] = {88,87,86,85,84,83,82,81,80,79,72};
+int serpienteY[100] = {60,60,60,60,60,60,60,60,60,60,60};
 int posicionXCabeza = 88;
 int posicionYCabeza = 60;
-int tamSerpiente = 8;
+int tamSerpiente = 11;
 //Orientacion de la serpiente:  comienza a la izquierda
 int orientacion = 2; //1= subir, -1 bajar, 2 derecha, -2 izquierda
 int gira = 0;
 int orientacionAnterior = -2;
-
-//Posicion de la comida
-int posicionXComida = 100;
-int posicionYComida = 30;
-
+int posicionXComida = 0;
+int posicionYComida = 0;
 //Buffer aux
 
 //	screen menu structure - each screen has its own
@@ -116,12 +113,10 @@ struct app_data_ *	app_data = *app_data_p;				//	pointer to screen data
 // call the return function (usually this is the start menu), specify the address of the function of our application as a parameter
 show_menu_animate(app_data->ret_f, (unsigned int)show_screen, ANIMATE_RIGHT);	
 };
-
 void screen_job(){
 // if necessary, you can use the screen data in this function
 struct app_data_** 	app_data_p = get_ptr_temp_buf_2(); 	//	pointer to pointer to screen data  
 struct app_data_ *	app_data = *app_data_p;				//	pointer to screen data
-
 
 
 //Refresca la pantalla:
@@ -129,6 +124,7 @@ refrescar_juego();
 
 // if necessary, set the screen_job call timer again
 set_update_period(1, velocidad);
+
 }
 
 int dispatch_screen (void *param){
@@ -143,15 +139,49 @@ int result = 0;
 switch (gest->gesture){
 	case GESTURE_CLICK: {		
 //Click en izquieda	
-		if ( ( gest->touch_pos_y >138) &&  ( gest->touch_pos_y < 158) ){ 
-			if ( ( gest->touch_pos_x >105) &&  ( gest->touch_pos_x < 120) ){
+		if ( ( gest->touch_pos_y >128) &&  ( gest->touch_pos_y < 168) && ( gest->touch_pos_x >90) &&  ( gest->touch_pos_x < 130)){ 
+	
 					// touchscreen center
 					// Perform the actions
 					vibrate(1,70,0);
 					//app_data->col = (app_data->col+1)%COLORS_COUNT;
 					//draw_screen(app_data->col);
 					//repaint_screen_lines(0, 176);
+						if(orientacion != 2){
+							orientacionAnterior = orientacion;
+							orientacion =-2;
+							gira = 1;
+						}
+			}else if (( gest->touch_pos_y >118) &&  ( gest->touch_pos_y < 158) && (gest->touch_pos_x >110) &&  ( gest->touch_pos_x < 150) ){ //Arriba
+				vibrate(1,70,0);
+					//app_data->col = (app_data->col+1)%COLORS_COUNT;
+					//draw_screen(app_data->col);
+					//repaint_screen_lines(0, 176);
+						if(orientacion != -1){
+							orientacionAnterior = orientacion;
+							orientacion =1;
+							gira = 1;
+						}
+			}else if (( gest->touch_pos_y >128) &&  ( gest->touch_pos_y < 168) && (gest->touch_pos_x >120) &&  ( gest->touch_pos_x < 170) ){//Derecha
+				vibrate(1,70,0);
+					//app_data->col = (app_data->col+1)%COLORS_COUNT;
+					//draw_screen(app_data->col);
+					//repaint_screen_lines(0, 176);
+						if(orientacion != -2){
+						orientacionAnterior = orientacion;
+						orientacion =2;
+						gira = 1;
 					}
+			}else if (( gest->touch_pos_y >128) &&  ( gest->touch_pos_y < 178) && (gest->touch_pos_x >110) &&  ( gest->touch_pos_x < 150) ){//Abajo
+				vibrate(1,70,0);
+					//app_data->col = (app_data->col+1)%COLORS_COUNT;
+					//draw_screen(app_data->col);
+					//repaint_screen_lines(0, 176);
+						if(orientacion != 1){
+							orientacionAnterior = orientacion;
+							orientacion =-1;
+							gira = 1;
+						}
 			}
 			break;
 		};
@@ -193,7 +223,6 @@ switch (gest->gesture){
 		};		
 		
 	}
-	
 	return result;
 };
 
@@ -204,19 +233,11 @@ void inicializar(){
 	load_font();
 	set_fg_color(COLOR_BLACK);
 	
-
-	//Crea serpiente:
-	/*serpienteX[0] = posicionXCabeza;
-	serpienteY[0] = posicionYCabeza;
-	for(int i = 1; i< tamSerpiente; i++){
-		serpienteX[i] = serpienteX[i-1]+1;
-		serpienteY[i] = serpienteY[i-1];
-	}*/
-	
+	crearCoordenadasFruta();
 	//Pinta serpiente
-	for(int i=0;i<tamSerpiente;i++){
+	/*for(int i=0;i<tamSerpiente;i++){
 		draw_horizontal_line(serpienteY[i] , serpienteX[i], serpienteX[i]);
-	}
+	}*/
 	refrescar_juego();
 	
 };
@@ -234,10 +255,10 @@ set_graph_callback_to_ram_1();
 
 //Muestra por pantalla la puntuacion
 char puntosPantalla[15];
-int posX = get_tick_count() % 170;
-_sprintf(puntosPantalla, "PosX %i",posX);
+
+_sprintf(puntosPantalla, "Puntos %i",puntos);
 text_out_center(puntosPantalla, 120, 0);
-text_out_center("#", posicionXComida, posicionYComida);
+
 
 //Dibuja la serpiente en su totalidad
 for(int i=tamSerpiente-1;i>0;i--){
@@ -272,7 +293,8 @@ for(int i=tamSerpiente-1;i>0;i--){
 	}*/
 	serpienteY[i]  = serpienteY[i-1];
 	serpienteX[i]  = serpienteX[i-1];
-	draw_horizontal_line(serpienteY[i] , serpienteX[i], serpienteX[i]);
+	//draw_horizontal_line(serpienteY[i] , serpienteX[i], serpienteX[i]);
+	draw_rect(serpienteX[i], serpienteY[i], serpienteX[i]+2, serpienteY[i]+2); 
 	//show_res_by_id(1313,posicionCuerpoX, posicionCuerpoY);  
 	//Resetea a posicion:
 	
@@ -289,24 +311,16 @@ if(orientacion == 1){//Sube
 	serpienteX[0] = serpienteX[0]-1;
 }
 
-draw_horizontal_line(serpienteY[0], serpienteX[0], serpienteX[0]);
+//draw_horizontal_line(serpienteY[0], serpienteX[0], serpienteX[0]);
+draw_rect(serpienteX[0], serpienteY[0], serpienteX[0]+2, serpienteY[0]+2); 
+
+detectarColision();
 
 
-/*
-if(orientacion == 1){//Sube
-	posicionYSerpiente[0] = posicionYSerpiente[0] -1;
-}else if(orientacion == -1){//Baja
-	posicionYSerpiente[0] = posicionYSerpiente[0] +1;
-}else if(orientacion == 2){//Derecha
-	posicionXSerpiente[0] = posicionXSerpiente[0] +1;
-}else if(orientacion == -2){//Izquierda
-	posicionXSerpiente[0] = posicionXSerpiente[0] -1;
-}
-*/
 //show_res_by_id(1313,posicionXCabeza, posicionYCabeza);  
 
 //text_out_center(".", posicionXCabeza, posicionYCabeza);
-
+crearFruta();
 pintarCruceta();
 //text_out_center(snake, posX, posY);
 //Pinta la comida dentro de la pantalla:
@@ -320,6 +334,37 @@ void pintarCruceta(){
 	//POS X AND POS Y
 	text_out_center("L", 110, 148);
 	text_out_center("R", 150, 148);
+	//show_res_by_id(ARROW_UP,130, 138); 
 	text_out_center("U", 130, 138);
+	//show_res_by_id(ARROW_DOWN,130, 158); 
 	text_out_center("D", 130, 158);
+};
+
+void crearFruta(){
+	draw_rect(posicionXComida, posicionYComida, posicionXComida+3, posicionYComida+3); 
+	//text_out_center("#", posicionXComida, posicionYComida);
+};
+
+void crearCoordenadasFruta(){
+	 posicionXComida = get_tick_count() % 170;
+	 posicionYComida = (get_tick_count()+5) % 170;
+}
+
+void detectarColision(){
+	if(serpienteX[0] == posicionXComida && serpienteY[0] == posicionYComida
+	||serpienteX[0]-1 == posicionXComida && serpienteY[0]-1 == posicionYComida
+	||serpienteX[0]+1 == posicionXComida && serpienteY[0]+1 == posicionYComida
+	||serpienteX[0] == posicionXComida+1 && serpienteY[0] == posicionYComida+1
+	||serpienteX[0] == posicionXComida+1 && serpienteY[0] == posicionYComida-1
+	||serpienteX[0] == posicionXComida-1 && serpienteY[0] == posicionYComida+1
+	||serpienteX[0]-1 == posicionXComida+1 && serpienteY[0]-1 == posicionYComida+1
+	||serpienteX[0]+1 == posicionXComida+1 && serpienteY[0]+1 == posicionYComida-1
+	||serpienteX[0]-1 == posicionXComida && serpienteY[0]-1 == posicionYComida+1
+	||serpienteX[0]+1 == posicionXComida+1 && serpienteY[0]+1 == posicionYComida){
+		tamSerpiente++;
+		velocidad = velocidad -5;
+		crearCoordenadasFruta();
+		
+	}
+	
 }
