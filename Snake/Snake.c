@@ -362,6 +362,7 @@ void detectarColision(){
 	||serpienteX[0]-1 == posicionXComida && serpienteY[0]-1 == posicionYComida+1
 	||serpienteX[0]+1 == posicionXComida+1 && serpienteY[0]+1 == posicionYComida){
 		tamSerpiente++;
+		puntos++;
 		velocidad = velocidad -5;
 		crearCoordenadasFruta();
 		
