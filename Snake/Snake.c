@@ -15,14 +15,15 @@ int velocidad = 100;
 //Puntos obtenidos
 int puntos = 0;
 //Posiciones de la serpiente
+int serpienteX[100] = {88,87,86,85,84,83,82,81};
+int serpienteY[100] = {60,60,60,60,60,60,60,60};
 int posicionXCabeza = 88;
 int posicionYCabeza = 60;
 int tamSerpiente = 8;
 //Orientacion de la serpiente:  comienza a la izquierda
-int orientacion = -2; //1= subir, -1 bajar, 2 derecha, -2 izquierda
+int orientacion = 2; //1= subir, -1 bajar, 2 derecha, -2 izquierda
 int gira = 0;
 int orientacionAnterior = -2;
-
 
 //Posicion de la comida
 int posicionXComida = 100;
@@ -140,12 +141,13 @@ struct gesture_ *gest = param;
 int result = 0;
 
 switch (gest->gesture){
-	case GESTURE_CLICK: {			
-		if ( ( gest->touch_pos_y >66) &&  ( gest->touch_pos_y < 110) ){ 
-			if ( ( gest->touch_pos_x >66) &&  ( gest->touch_pos_x < 110) ){
+	case GESTURE_CLICK: {		
+//Click en izquieda	
+		if ( ( gest->touch_pos_y >138) &&  ( gest->touch_pos_y < 158) ){ 
+			if ( ( gest->touch_pos_x >105) &&  ( gest->touch_pos_x < 120) ){
 					// touchscreen center
 					// Perform the actions
-					//vibrate(1,70,0);
+					vibrate(1,70,0);
 					//app_data->col = (app_data->col+1)%COLORS_COUNT;
 					//draw_screen(app_data->col);
 					//repaint_screen_lines(0, 176);
@@ -198,11 +200,25 @@ switch (gest->gesture){
 //Crear el fondo de color blanco:
 
 void inicializar(){
+	//Color del font
 	load_font();
 	set_fg_color(COLOR_BLACK);
-
 	
+
+	//Crea serpiente:
+	/*serpienteX[0] = posicionXCabeza;
+	serpienteY[0] = posicionYCabeza;
+	for(int i = 1; i< tamSerpiente; i++){
+		serpienteX[i] = serpienteX[i-1]+1;
+		serpienteY[i] = serpienteY[i-1];
+	}*/
+	
+	//Pinta serpiente
+	for(int i=0;i<tamSerpiente;i++){
+		draw_horizontal_line(serpienteY[i] , serpienteX[i], serpienteX[i]);
+	}
 	refrescar_juego();
+	
 };
 
 // custom function
@@ -216,29 +232,16 @@ set_graph_callback_to_ram_1();
 //int numero = rand() % 11; 
 //Concatena numero y cadena de texto
 
-//Moviendo:
-if(orientacion == 1){//Sube
-	posicionYCabeza = posicionYCabeza -1;
-}else if(orientacion == -1){//Baja
-	posicionYCabeza = posicionYCabeza +1;
-}else if(orientacion == 2){//Derecha
-	posicionXCabeza = posicionXCabeza +1;
-}else if(orientacion == -2){//Izquierda
-	posicionXCabeza = posicionXCabeza -1;
-}
-
 //Muestra por pantalla la puntuacion
 char puntosPantalla[15];
-_sprintf(puntosPantalla, "Posicion Y %i",posicionYCabeza);
+int posX = get_tick_count() % 170;
+_sprintf(puntosPantalla, "PosX %i",posX);
 text_out_center(puntosPantalla, 120, 0);
 text_out_center("#", posicionXComida, posicionYComida);
-int posicionCuerpoX;
-int posicionCuerpoXAnterior = posicionXCabeza;
-int posicionCuerpoY;
-int posicionCuerpoYAnterior = posicionYCabeza;
+
 //Dibuja la serpiente en su totalidad
-for(int i=0;i<tamSerpiente;i++){
-	if(gira == 0){
+for(int i=tamSerpiente-1;i>0;i--){
+	/*if(gira == 0){
 		if(orientacion == 1){//Sube
 			posicionCuerpoX = posicionCuerpoXAnterior;
 			posicionCuerpoY = posicionCuerpoYAnterior-1;
@@ -266,12 +269,27 @@ for(int i=0;i<tamSerpiente;i++){
 			posicionCuerpoX = posicionCuerpoXAnterior - 1;
 			posicionCuerpoY = posicionCuerpoYAnterior;
 		}
-	}
-	text_out_center(".", posicionCuerpoX, posicionCuerpoY);
+	}*/
+	serpienteY[i]  = serpienteY[i-1];
+	serpienteX[i]  = serpienteX[i-1];
+	draw_horizontal_line(serpienteY[i] , serpienteX[i], serpienteX[i]);
+	//show_res_by_id(1313,posicionCuerpoX, posicionCuerpoY);  
 	//Resetea a posicion:
-	posicionCuerpoXAnterior= posicionCuerpoX;
-	posicionCuerpoYAnterior = posicionCuerpoY;
+	
 }
+
+//Mueve solo la cabeza
+if(orientacion == 1){//Sube
+	serpienteY[0] = serpienteY[0]-1;
+}else if(orientacion == -1){//Baja
+	serpienteY[0] = serpienteY[0]+1;
+}else if(orientacion == 2){//Derecha
+	serpienteX[0] = serpienteX[0]+1;
+}else if(orientacion == -2){//Izquierda
+	serpienteX[0] = serpienteX[0]-1;
+}
+
+draw_horizontal_line(serpienteY[0], serpienteX[0], serpienteX[0]);
 
 
 /*
@@ -285,8 +303,11 @@ if(orientacion == 1){//Sube
 	posicionXSerpiente[0] = posicionXSerpiente[0] -1;
 }
 */
-text_out_center(".", posicionXCabeza, posicionYCabeza);
+//show_res_by_id(1313,posicionXCabeza, posicionYCabeza);  
 
+//text_out_center(".", posicionXCabeza, posicionYCabeza);
+
+pintarCruceta();
 //text_out_center(snake, posX, posY);
 //Pinta la comida dentro de la pantalla:
 
@@ -294,3 +315,11 @@ text_out_center(".", posicionXCabeza, posicionYCabeza);
 repaint_screen_lines(0, 176);
 
 };
+
+void pintarCruceta(){
+	//POS X AND POS Y
+	text_out_center("L", 110, 148);
+	text_out_center("R", 150, 148);
+	text_out_center("U", 130, 138);
+	text_out_center("D", 130, 158);
+}

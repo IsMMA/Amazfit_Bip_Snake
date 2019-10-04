@@ -28,6 +28,7 @@ void 	inicializar();
 void 	screen_job();
 void    pinta_datos();
 void	refrescar_juego();
+void	pintarCruceta();
 //void    dibujar();
 //void    pinta_datos();
 #endif
